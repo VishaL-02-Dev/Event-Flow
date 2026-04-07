@@ -4,6 +4,7 @@ export interface IEvent extends Document{
     name:string;
     description?:string;
     location?:string;
+    organizer: mongoose.Types.ObjectId;
     date:Date;
     inviteToken:string;
     createdAt:Date;
@@ -19,6 +20,7 @@ description:{
 location:{
     type:String
 },
+organizer: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 date:{
     type:Date,required:true
 },
