@@ -11,18 +11,21 @@ export interface IUser extends Document {
 
 const UserSchema = new Schema<IUser>(
     {
-        name: {type: String, required:true},
-        email: {type: String, required:true, unique:true, lowercase:true},
-        password: {type: String, required:true},
-        isAdmin: {type:Boolean, default:false}
+        name: { type: String, required: true },
+        email: { type: String, required: true, unique: true, lowercase: true },
+        password: { type: String, required: true },
+        isAdmin: { type: Boolean, default: false }
     },
-    {timestamps: true}
+    { timestamps: true }
 );
 
-UserSchema.pre('save', async function (next){
-    if(!this.isModified('password')) return next();
+UserSchema.pre('save', async function () {
+    if (!this.isModified('password')) return;
     this.password = await bcrypt.hash(this.password, 12);
-    next();
 });
+
+UserSchema.methods.comparePassword = async function (candidate: string) {
+    return await bcrypt.compare(candidate, this.password);
+};
 
 export default mongoose.model<IUser>('User', UserSchema);
