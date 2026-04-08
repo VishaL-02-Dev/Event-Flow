@@ -13,11 +13,11 @@ export const protect = async (
 ) => {
     let token;
 
-    if (req.headers.authorization?.startsWith("Bearers")) {
+    if (req.headers.authorization?.startsWith("Bearer")) {
         token = req.headers.authorization?.split(" ")[1];
 
         try {
-            const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
+            const decoded: any = jwt.verify(token as string, process.env.JWT_SECRET!);
 
             req.user = await User.findById(decoded.id).select("-password");
 
