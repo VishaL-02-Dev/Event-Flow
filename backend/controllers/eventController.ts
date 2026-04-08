@@ -6,15 +6,18 @@ import crypto from "crypto";
 export const createEvent = async (req: AuthRequest, res:Response) =>{
     try {
         const {name, description, location, date} = req.body;
-
+      console.log(req.user);
+      
         const inviteToken = crypto.randomBytes(16).toString("hex");
+        console.log(inviteToken);
+        
 
         const event = await Event.create({
             name,
             description,
             location,
             date,
-            organizer:req.user?.id,
+            organizer:req.user?._id,
             inviteToken,
         });
         res.status(201).json(event);

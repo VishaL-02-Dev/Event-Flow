@@ -20,7 +20,7 @@ app.use("/api/guest",guestRoutes)
 app.get('/',(req:Request,res:Response)=>{
     res.send("Hello")
 });
-app.use("/api/users",userRouter)
+
 
 app.listen(3000,()=>{
     console.log(`Server running in 3000`);
