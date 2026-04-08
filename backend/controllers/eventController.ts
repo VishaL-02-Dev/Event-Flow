@@ -1,8 +1,9 @@
 import type {Request, Response} from 'express';
+import type { AuthRequest } from '../middleware/authMiddleware.js';
 import Event from '../models/Event.js';
 import crypto from "crypto";
 
-export const createEvent = async (req: Request, res:Response) =>{
+export const createEvent = async (req: AuthRequest, res:Response) =>{
     try {
         const {name, description, location, date} = req.body;
 
@@ -24,7 +25,7 @@ export const createEvent = async (req: Request, res:Response) =>{
     }
 }
 
-export const getEvents = async (req: Request, res: Response) => {
+export const getEvents = async (req: AuthRequest, res: Response) => {
   try {
     const events = await Event.find({ organizer: req.user?.id });
     res.json(events);
@@ -34,7 +35,7 @@ export const getEvents = async (req: Request, res: Response) => {
 };
 
 
-export const getEventById = async (req: Request, res: Response) => {
+export const getEventById = async (req: AuthRequest, res: Response) => {
   try {
     const event = await Event.findById(req.params.id);
 
