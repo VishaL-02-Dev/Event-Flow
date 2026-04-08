@@ -14,7 +14,7 @@ export const createEvent = async (req: AuthRequest, res:Response) =>{
             description,
             location,
             date,
-            organizer:req.user?.id,
+            organizer:req.user?._id,
             inviteToken,
         });
         res.status(201).json(event);
