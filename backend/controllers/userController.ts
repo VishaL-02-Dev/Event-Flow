@@ -3,7 +3,7 @@ import User from "../models/User.js";
 import jwt from 'jsonwebtoken';
 
 
-const jwtSecret = process.env.JWT_SECRET;
+
 export const registerUser = async (req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body;
@@ -34,6 +34,16 @@ export const registerUser = async (req: Request, res: Response) => {
 
 export const loginUser = async (req: Request, res: Response) => {
     try {
+        const jwtSecret = process.env.JWT_SECRET;
+
+jwtSecret as string
+if(!jwtSecret)
+{
+    console.log(jwtSecret,"jjjj");
+    console.log("JWT:", process.env.JWT_SECRET);
+    
+    throw new Error("No Jwt secret is there")
+}
         const { email, password } = req.body;
         const findUser = await User.findOne({ email });
         if (!findUser) {
