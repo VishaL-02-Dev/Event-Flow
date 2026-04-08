@@ -7,17 +7,16 @@ import  { connectDB }  from './config/db.js';
 // import dotenv from 'dotenv';
 import userRouter from './routes/userRoutes.js'
 import eventRoutes from './routes/eventRoutes.js'
+import guestRoutes from './routes/guestRoutes.js'
 
 const app=express();
 connectDB();
 app.use(cors());
 app.use(express.json())
-<<<<<<< HEAD
-=======
+
 app.use("/api/users",userRouter);
 app.use("/api/events",eventRoutes);
-
->>>>>>> origin/vishal
+app.use("/api/guest",guestRoutes)
 app.get('/',(req:Request,res:Response)=>{
     res.send("Hello")
 });

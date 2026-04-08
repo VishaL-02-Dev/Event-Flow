@@ -8,7 +8,8 @@ export interface IGuest extends Document{
     entryToken:string;
     checkedIn:boolean;
     checkInAt?:Date;
-    registeredAt:Date
+    registeredAt:Date;
+    isDeleted?:boolean;
 
 }
 
@@ -40,6 +41,10 @@ checkInAt:{
 registeredAt:{
     type:Date,
     required:true
+},
+isDeleted:{
+    type:Boolean,
+    default:false
 }
 
 },{timestamps:true})
