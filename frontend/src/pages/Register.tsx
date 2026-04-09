@@ -18,14 +18,16 @@ export default function Register() {
     setLoading(true);
     setError("");
     try {
-<<<<<<< HEAD
+
       const res = await API.post("/users/register", form);
       alert(res.data.message);
       navigate("/login");
-=======
       await API.post("/users/register", form);
       navigate("/users/login");
->>>>>>> ef038ef81f4b337cd3bd6c6dd80a999fa5282567
+
+      await API.post("/users/register", form);
+      navigate("/users/login");
+
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed. Please try again.");
     } finally {

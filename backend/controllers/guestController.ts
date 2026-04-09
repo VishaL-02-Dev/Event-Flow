@@ -42,7 +42,7 @@ export const getGuestsByEvent = async (req: Request, res: Response) => {
   try {
     const { eventId } = req.params;
 
-    const guests = await Guest.find({ eventId });
+    const guests = await Guest.find({ eventId:eventId });
 
     res.status(200).json(guests);
 
@@ -51,9 +51,6 @@ export const getGuestsByEvent = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * CHECK-IN GUEST (scan token)
- */
 export const checkInGuest = async (req: Request, res: Response) => {
   try {
     const { token } = req.body;

@@ -20,10 +20,7 @@ app.use("/api/guest",guestRoutes)
 app.get('/',(req:Request,res:Response)=>{
     res.send("Hello")
 });
-<<<<<<< HEAD
 
-=======
->>>>>>> ef038ef81f4b337cd3bd6c6dd80a999fa5282567
 
 app.listen(3000,()=>{
     console.log(`Server running in 3000`);

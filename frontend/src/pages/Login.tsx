@@ -19,11 +19,7 @@ export default function Login() {
     setError("");
     try {
       const res = await API.post("/users/login", form);
-<<<<<<< HEAD
 
-      // store token
-=======
->>>>>>> ef038ef81f4b337cd3bd6c6dd80a999fa5282567
       localStorage.setItem("token", res.data.token);
       navigate("/");
     } catch (err: any) {

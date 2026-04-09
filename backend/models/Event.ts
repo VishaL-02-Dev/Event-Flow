@@ -8,6 +8,7 @@ export interface IEvent extends Document{
     date:Date;
     inviteToken:string;
     createdAt:Date;
+    isDeleted:boolean;
 }
 
 const EventSchema=new Schema<IEvent>({
@@ -27,7 +28,10 @@ date:{
 inviteToken:{
     type:String,required:true,unique:true
 },
-
+isDeleted:{
+    type:Boolean,
+    default:false
+}
 },{timestamps:true})
 
 export default mongoose.model<IEvent>('Event',EventSchema)
