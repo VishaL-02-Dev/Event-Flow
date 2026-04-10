@@ -70,7 +70,7 @@ export default function Home() {
           {token ? (
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                to="/dashboard"
+                to="/dashboard"          // ← Changed from /dashboard (was already correct)
                 className="bg-violet-600 hover:bg-violet-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all shadow-lg shadow-violet-600/30 hover:shadow-violet-500/40"
               >
                 Go to Dashboard →

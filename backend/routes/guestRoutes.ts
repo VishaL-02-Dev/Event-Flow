@@ -10,14 +10,9 @@ import {
 const router = express.Router();
 
 router.post('/create', createGuest);
-
 router.get('/event/:eventId', getGuestsByEvent);
-
 router.post('/checkin', checkInGuest);
-
 router.patch('/soft-delete/:id', softDeleteGuest);
-
-
 router.patch('/restore/:id', restoreGuest);
 
 
