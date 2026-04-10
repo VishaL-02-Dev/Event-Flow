@@ -1,8 +1,18 @@
 import { useNavigate, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -10,132 +20,187 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950">
-      {/* Background grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
+    <div className="min-h-screen bg-zinc-50 overflow-hidden relative">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-[size:40px_40px] opacity-70" />
+      
+      {/* Interactive Mouse Glow */}
+      <div
+        className="absolute w-[800px] h-[800px] bg-gradient-to-br from-violet-400/20 to-fuchsia-400/20 rounded-full blur-[130px] pointer-events-none transition-all duration-700 ease-out z-0"
+        style={{
+          left: `${mousePosition.x - 400}px`,
+          top: `${mousePosition.y - 400}px`,
+        }}
+      />
 
       {/* Navbar */}
-      <nav className="relative border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center shadow-md shadow-violet-600/30">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-              </svg>
+      <nav className="relative z-50 border-b border-zinc-100 bg-white/90 backdrop-blur-2xl sticky top-0">
+        <div className="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-11 h-11 rounded-3xl bg-gradient-to-br from-violet-600 via-fuchsia-600 to-pink-600 flex items-center justify-center shadow-xl shadow-violet-500/30">
+              <span className="text-white text-3xl font-bold tracking-[-2px]">EF</span>
             </div>
-            <span className="text-white font-semibold text-sm tracking-tight">EventQR</span>
+            <div>
+              <span className="text-3xl font-semibold tracking-tighter text-zinc-900">EventFlow</span>
+            </div>
           </div>
 
           {token ? (
             <button
               onClick={handleLogout}
-              className="text-sm text-neutral-400 hover:text-white border border-neutral-700 hover:border-neutral-600 px-4 py-1.5 rounded-lg transition-all"
+              className="px-7 py-3 text-sm font-medium text-zinc-600 hover:text-zinc-900 border border-zinc-300 rounded-2xl hover:border-zinc-400 transition-all"
             >
               Logout
             </button>
           ) : (
-            <div className="flex items-center gap-3">
-              <Link to="/login" className="text-sm text-neutral-400 hover:text-white transition-colors">
+            <div className="flex items-center gap-5">
+              <Link
+                to="/login"
+                className="px-7 py-3 text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-all"
+              >
                 Sign in
               </Link>
-              <Link to="/register" className="text-sm bg-violet-600 hover:bg-violet-500 text-white px-4 py-1.5 rounded-lg transition-all">
-                Get started
+              <Link
+                to="/register"
+                className="px-8 py-3 bg-zinc-900 hover:bg-black text-white font-semibold rounded-2xl transition-all shadow-lg"
+              >
+                Get Started Free
               </Link>
             </div>
           )}
         </div>
       </nav>
 
-      {/* Hero */}
-      <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-20 text-center">
-        {/* Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-64 bg-violet-600/15 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-violet-600/10 border border-violet-500/20 text-violet-400 text-xs font-medium px-3 py-1.5 rounded-full mb-6">
-            <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />
-            QR-powered event check-ins
+      {/* Hero Section */}
+      <div className="relative max-w-6xl mx-auto px-8 pt-32 pb-28 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto">
+          {/* Premium Badge */}
+          <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-white border border-zinc-200 rounded-full mb-10 shadow shadow-zinc-100">
+            <div className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </div>
+            <span className="text-emerald-600 text-sm font-semibold tracking-widest">EXPERIENCE THE FUTURE OF EVENTS</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-5">
-            Manage events,<br />
-            <span className="text-violet-400">effortlessly.</span>
+          <h1 className="text-7xl sm:text-[5.2rem] font-bold text-zinc-950 tracking-[-3px] leading-none mb-8">
+            Events reimagined.<br />
+            <span className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 bg-clip-text text-transparent">
+              Flow perfected.
+            </span>
           </h1>
 
-          <p className="text-neutral-500 text-lg max-w-xl mx-auto leading-relaxed mb-10">
-            Create events, invite guests with a QR code, and check them in seamlessly — all from one place.
+          <p className="text-2xl text-zinc-600 max-w-3xl mx-auto leading-tight mb-14">
+            Create breathtaking events, generate magical QR experiences, 
+            and deliver seamless guest journeys that feel effortless.
           </p>
 
-          {token ? (
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* Hero Buttons */}
+          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+            {token ? (
               <Link
                 to="/dashboard"
-                className="bg-violet-600 hover:bg-violet-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all shadow-lg shadow-violet-600/30 hover:shadow-violet-500/40"
+                className="group relative px-12 py-5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold text-xl rounded-3xl overflow-hidden shadow-2xl hover:shadow-violet-500/50 transition-all hover:scale-105 active:scale-95"
               >
-                Go to Dashboard →
+                Enter Dashboard
+                <span className="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
               </Link>
-            </div>
-          ) : (
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                to="/register"
-                className="bg-violet-600 hover:bg-violet-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all shadow-lg shadow-violet-600/30"
-              >
-                Get started free
-              </Link>
-              <Link
-                to="/login"
-                className="text-neutral-400 hover:text-white border border-neutral-700 hover:border-neutral-600 px-6 py-3 rounded-xl text-sm transition-all"
-              >
-                Sign in
-              </Link>
-            </div>
-          )}
+            ) : (
+              <>
+                <Link
+                  to="/register"
+                  className="group relative px-12 py-5 bg-zinc-900 hover:bg-black text-white font-semibold text-xl rounded-3xl shadow-2xl transition-all hover:scale-105 active:scale-95"
+                >
+                  Start Creating Events
+                </Link>
+                <Link
+                  to="/login"
+                  className="px-12 py-5 border-2 border-zinc-300 text-zinc-700 font-semibold text-xl rounded-3xl hover:bg-zinc-100 hover:border-zinc-400 transition-all"
+                >
+                  I already have an account
+                </Link>
+              </>
+            )}
+          </div>
         </div>
 
-        {/* Feature cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-20">
+        {/* Floating 3D-like QR Preview */}
+        <div className="absolute right-12 top-40 hidden 2xl:block">
+          <div className="relative w-80 h-80 bg-white p-8 rounded-[2.75rem] shadow-2xl border border-zinc-100">
+            <div className="bg-white rounded-3xl p-6 shadow-inner">
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=https://eventflow.in/guest/demo12345"
+                alt="EventFlow QR"
+                className="w-full h-full drop-shadow-md"
+              />
+            </div>
+            <div className="absolute -top-4 -right-4 bg-gradient-to-br from-emerald-400 to-teal-500 text-white text-xs font-bold px-6 py-2 rounded-2xl shadow-xl flex items-center gap-2">
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+              LIVE DEMO
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features */}
+      <div className="max-w-6xl mx-auto px-8 pb-32">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-semibold text-zinc-900 mb-4">Designed to impress</h2>
+          <p className="text-zinc-600 text-xl">Powerful tools wrapped in elegance</p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
           {[
             {
-              icon: (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                </svg>
-              ),
-              title: "Create events",
-              desc: "Set up events in seconds and get a shareable invite QR instantly.",
+              title: "Instant QR Magic",
+              desc: "Generate beautiful, branded QR codes instantly for every guest and event.",
+              icon: "✨",
+              color: "from-violet-500 to-purple-600"
             },
             {
-              icon: (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                </svg>
-              ),
-              title: "QR invitations",
-              desc: "Guests scan the invite QR, fill a form and get their unique entry pass.",
+              title: "Lightning Check-ins",
+              desc: "Scan QR at entry and get instant guest details with real-time sync.",
+              icon: "⚡",
+              color: "from-fuchsia-500 to-pink-600"
             },
             {
-              icon: (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              ),
-              title: "Smooth check-ins",
-              desc: "Scan entry QR at the gate. Guest info shows up instantly.",
-            },
-          ].map((f) => (
+              title: "Smart Guest Flow",
+              desc: "Manage RSVPs, groups, preferences and analytics in one beautiful dashboard.",
+              icon: "🌊",
+              color: "from-pink-500 to-rose-600"
+            }
+          ].map((f, i) => (
             <div
-              key={f.title}
-              className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 text-left hover:border-neutral-700 transition-all"
+              key={i}
+              className="group bg-white border border-zinc-100 rounded-3xl p-10 hover:border-violet-200 hover:shadow-2xl transition-all duration-500 hover:-translate-y-3"
             >
-              <div className="w-10 h-10 bg-violet-600/10 border border-violet-500/20 rounded-xl flex items-center justify-center text-violet-400 mb-4">
+              <div className={`inline-flex w-20 h-20 rounded-3xl bg-gradient-to-br ${f.color} items-center justify-center text-5xl mb-8 shadow-inner transition-transform group-hover:scale-110`}>
                 {f.icon}
               </div>
-              <h3 className="text-white font-medium text-sm mb-1.5">{f.title}</h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">{f.desc}</p>
+              <h3 className="text-3xl font-semibold text-zinc-900 mb-5 group-hover:text-violet-700 transition-colors">
+                {f.title}
+              </h3>
+              <p className="text-zinc-600 text-[17px] leading-relaxed">{f.desc}</p>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Final CTA */}
+      <div className="bg-gradient-to-b from-transparent via-white to-white py-28 border-t border-zinc-100">
+        <div className="max-w-4xl mx-auto text-center px-6">
+          <h2 className="text-6xl font-bold text-zinc-950 tracking-tight mb-6">
+            The future of events<br />starts here
+          </h2>
+          <p className="text-2xl text-zinc-600 mb-12">Join the movement of effortless event management.</p>
+
+          <Link
+            to={token ? "/admin/dashboard" : "/register"}
+            className="inline-flex items-center gap-4 px-16 py-7 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white text-2xl font-semibold rounded-3xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-violet-500/40"
+          >
+            {token ? "Enter My EventFlow" : "Create Your First Event"}
+            <span className="text-3xl">→</span>
+          </Link>
         </div>
       </div>
     </div>

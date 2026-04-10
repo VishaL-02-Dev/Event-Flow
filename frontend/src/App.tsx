@@ -1,10 +1,13 @@
-import { Routes, Route } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-// User pages
+import { Routes, Route, Navigate } from "react-router-dom";
+
+// Public pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+// Protected User pages
+import Dashboard from "./pages/Dashboard";       
+import EventDetail from "./pages/EventDetail";  
 // Admin pages
 import AdminLogin from "./pages/AdminLogin";
 import AdminLayout from "./pages/AdminLayout";
@@ -13,62 +16,38 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminEvents from "./pages/AdminEvents";
 import AdminGuests from "./pages/AdminGuest";
 
-
 import UserProtectedRoute from "./routes/UserProtect";
 import AdminProtectedRoute from "./routes/AdminProtect";
 
-
 function App() {
   return (
-    <>
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-    <Toaster
-        position="top-right"
-        reverseOrder={false}
-        toastOptions={{
-          style: {
-            background: "#0f172a",
-            color: "#fff",
-            border: "1px solid rgba(255,255,255,0.1)"
-          }
-        }}
-      />
-     <Routes>
-
-      <Route path="/" element={<Home/>} />
-
+      {/* Protected User Routes */}
       <Route
-        path="/login"
-        element={
-            <Login />
-        }
-      />
-
-      <Route
-        path="/register"
-        element={
-            <Register />
-        }
-      />
-
-      
-      <Route
-        path="/"
+        path="/dashboard"
         element={
           <UserProtectedRoute>
-            <Home />
+            <Dashboard />
           </UserProtectedRoute>
         }
       />
 
-      
       <Route
-        path="/admin/login"
+        path="/event/:id"
         element={
-            <AdminLogin />
+          <UserProtectedRoute>
+            <EventDetail />
+          </UserProtectedRoute>
         }
       />
 
+      {/* Admin Routes */}
+      <Route path="/admin/login" element={<AdminLogin />} />
       <Route
         path="/admin"
         element={
@@ -83,9 +62,9 @@ function App() {
         <Route path="guests" element={<AdminGuests />} />
       </Route>
 
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
-    </>
-   
   );
 }
 

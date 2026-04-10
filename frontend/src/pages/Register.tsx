@@ -10,24 +10,18 @@ export default function Register() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setError("");
+    if (error) setError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
+
     try {
-
       const res = await API.post("/users/register", form);
-      alert(res.data.message);
+      alert(res.data.message || "Account created successfully!");
       navigate("/login");
-      await API.post("/users/register", form);
-      navigate("/users/login");
-
-      await API.post("/users/register", form);
-      navigate("/users/login");
-
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed. Please try again.");
     } finally {
@@ -36,100 +30,97 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 flex items-center justify-center px-4">
-      {/* Background grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
+    <div className="min-h-screen bg-gradient-to-br from-zinc-100 via-white to-zinc-50 flex items-center justify-center px-4 overflow-hidden relative">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[radial-gradient(#a1a1aa_0.8px,transparent_1px)] bg-[size:30px_30px] opacity-40" />
 
-      {/* Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl pointer-events-none" />
+      {/* Soft Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-fuchsia-400/10 rounded-full blur-[130px]" />
 
       <div className="relative w-full max-w-md">
         {/* Brand */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-violet-600 mb-4 shadow-lg shadow-violet-600/40">
-            <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-            </svg>
+        <div className="text-center mb-12">
+          <div className="mx-auto w-16 h-16 rounded-3xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center shadow-2xl mb-6">
+            <span className="text-white text-4xl font-bold tracking-tighter">EF</span>
           </div>
-          <h1 className="text-2xl font-semibold text-white tracking-tight">Create an account</h1>
-          <p className="text-neutral-500 text-sm mt-1">Start managing your events today</p>
+          <h1 className="text-4xl font-semibold text-zinc-900 tracking-tight">Join EventFlow</h1>
+          <p className="text-zinc-600 mt-2">Create your account and start hosting amazing events</p>
         </div>
 
-        {/* Card */}
-        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 shadow-2xl">
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Error */}
+        {/* Glass Card */}
+        <div className="bg-white/80 backdrop-blur-2xl border border-white shadow-2xl rounded-3xl p-10">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
-                <svg className="w-4 h-4 text-red-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z" />
-                </svg>
-                <p className="text-red-400 text-sm">{error}</p>
+              <div className="bg-red-50 border border-red-200 text-red-600 px-5 py-3 rounded-2xl text-sm flex items-start gap-3">
+                <span className="text-red-500 mt-0.5">⚠️</span>
+                <p>{error}</p>
               </div>
             )}
 
             {/* Name */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-400 uppercase tracking-wider">Full name</label>
+            <div>
+              <label className="block text-sm font-medium text-zinc-700 mb-2">Full Name</label>
               <input
                 name="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder="Alex Rivera"
+                value={form.name}
                 onChange={handleChange}
                 required
-                className="w-full bg-neutral-800 border border-neutral-700 text-white placeholder-neutral-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                className="w-full bg-white border border-zinc-300 focus:border-violet-500 rounded-2xl px-5 py-4 text-zinc-900 placeholder-zinc-400 transition-all"
               />
             </div>
 
             {/* Email */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-400 uppercase tracking-wider">Email</label>
+            <div>
+              <label className="block text-sm font-medium text-zinc-700 mb-2">Email address</label>
               <input
                 name="email"
                 type="email"
                 placeholder="you@example.com"
+                value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full bg-neutral-800 border border-neutral-700 text-white placeholder-neutral-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                className="w-full bg-white border border-zinc-300 focus:border-violet-500 rounded-2xl px-5 py-4 text-zinc-900 placeholder-zinc-400 transition-all"
               />
             </div>
 
             {/* Password */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-400 uppercase tracking-wider">Password</label>
+            <div>
+              <label className="block text-sm font-medium text-zinc-700 mb-2">Password</label>
               <input
                 name="password"
                 type="password"
-                placeholder="••••••••"
+                placeholder="Create a strong password"
+                value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full bg-neutral-800 border border-neutral-700 text-white placeholder-neutral-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                className="w-full bg-white border border-zinc-300 focus:border-violet-500 rounded-2xl px-5 py-4 text-zinc-900 placeholder-zinc-400 transition-all"
               />
-              <p className="text-neutral-600 text-xs mt-1">Use at least 8 characters</p>
+              <p className="text-xs text-zinc-500 mt-1.5">Minimum 8 characters</p>
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl text-sm transition-all duration-200 shadow-lg shadow-violet-600/30 hover:shadow-violet-500/40 flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white font-semibold py-4 rounded-2xl text-lg shadow-xl shadow-violet-500/30 transition-all duration-300 disabled:opacity-70 flex items-center justify-center gap-3 mt-4"
             >
               {loading ? (
                 <>
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                   </svg>
-                  Creating account...
+                  Creating your account...
                 </>
-              ) : "Create account"}
+              ) : "Create Account"}
             </button>
           </form>
 
-          <p className="text-center text-neutral-600 text-sm mt-6">
+          <p className="text-center text-zinc-600 mt-8 text-sm">
             Already have an account?{" "}
-            <Link to="/login" className="text-violet-400 hover:text-violet-300 transition-colors font-medium">
-              Sign in
+            <Link to="/login" className="text-violet-600 hover:text-violet-700 font-medium transition-colors">
+              Sign in here
             </Link>
           </p>
         </div>
