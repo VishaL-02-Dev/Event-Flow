@@ -20,7 +20,7 @@ const router = express.Router();
 
 router.post("/login", adminLogin);
 
-// router.use(protect, isAdmin);
+router.use(protect);
 
 router.get("/dashboard", getAdminDashboard);
 
