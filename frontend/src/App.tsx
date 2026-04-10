@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-
+import { Toaster } from "react-hot-toast";
 // User pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -20,7 +20,20 @@ import AdminProtectedRoute from "./routes/AdminProtect";
 
 function App() {
   return (
-    <Routes>
+    <>
+
+    <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            background: "#0f172a",
+            color: "#fff",
+            border: "1px solid rgba(255,255,255,0.1)"
+          }
+        }}
+      />
+     <Routes>
 
       <Route path="/" element={<Home/>} />
 
@@ -71,6 +84,8 @@ function App() {
       </Route>
 
     </Routes>
+    </>
+   
   );
 }
 
