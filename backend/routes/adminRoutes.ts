@@ -22,9 +22,9 @@ router.post("/login", adminLogin);
 
 // router.use(protect, isAdmin);
 
-router.get("/dashboard", getAdminDashboard);
+router.get("/dashboard", protect,getAdminDashboard);
 
-router.get("/users", getAllUsers);
+router.get("/users",protect, getAllUsers);
 router.patch("/users/:userId/block", blockUser);
 router.patch("/users/:userId/unblock", unblockUser);
 

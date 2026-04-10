@@ -8,6 +8,7 @@ import  { connectDB }  from './config/db.js';
 import userRouter from './routes/userRoutes.js'
 import eventRoutes from './routes/eventRoutes.js'
 import guestRoutes from './routes/guestRoutes.js'
+import adminRoutes from './routes/adminRoutes.js'
 
 const app=express();
 connectDB();
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json())
 
 app.use("/api/users",userRouter);
+app.use("/api/admin",adminRoutes)
 app.use("/api/events",eventRoutes);
 app.use("/api/guest",guestRoutes)
 app.get('/',(req:Request,res:Response)=>{
