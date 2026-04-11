@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ADMIN_API = axios.create({
-  baseURL: "http://localhost:3000/api/admin",
+  baseURL: "https://event-flow-5q4k.onrender.com/api/admin",
 });
 
 ADMIN_API.interceptors.request.use((req) => {
