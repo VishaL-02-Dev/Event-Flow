@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 // Protected User pages
 import Dashboard from "./pages/Dashboard";       
 import EventDetail from "./pages/EventDetail";  
+import InvitePage from "./pages/Invite";
 // Admin pages
 import AdminLogin from "./pages/AdminLogin";
 import AdminLayout from "./pages/AdminLayout";
@@ -26,6 +27,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/invite/:token" element={<InvitePage/>}/>
 
       {/* Protected User Routes */}
       <Route

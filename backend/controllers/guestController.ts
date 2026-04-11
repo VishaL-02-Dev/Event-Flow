@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import Guest from "../models/Guest.js";
+import Event from "../models/Event.js";
 import crypto from "crypto";
 
 
@@ -115,5 +116,25 @@ export const restoreGuest = async (req: Request, res: Response) => {
     res.status(200).json({ message: "Guest restored successfully", guest });
   } catch (error) {
     res.status(500).json({ message: "Restore failed", error });
+  }
+};
+
+export const getEventByInviteToken = async (req: Request, res: Response) => {
+  try {
+    const { inviteToken } = req.params;
+
+    const event = await Event.findOne({ 
+      inviteToken,
+      isDeleted: { $ne: true }   // Don't show deleted events
+    }).select('name description location date _id');
+
+    if (!event) {
+      return res.status(404).json({ message: "Invalid or expired invite link" });
+    }
+
+    res.json(event);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };

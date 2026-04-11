@@ -58,7 +58,7 @@ export default function EventDetail() {
     if (!id) return;
     setRefreshing(true);
     try {
-      const res = await API.get(`/guests/event/${id}`);
+      const res = await API.get(`/guest/event/${id}`);
       const activeGuests = res.data.filter((guest: Guest) => !guest.isDeleted);
       setGuests(activeGuests);
     } catch (err) {
@@ -79,7 +79,7 @@ export default function EventDetail() {
 
   const handleCheckIn = async (entryToken: string) => {
     try {
-      await API.post('/guests/checkin', { token: entryToken });
+      await API.post('/guest/checkin', { token: entryToken });
       alert("Guest checked in successfully! ✓");
       fetchGuests();
     } catch (err: any) {

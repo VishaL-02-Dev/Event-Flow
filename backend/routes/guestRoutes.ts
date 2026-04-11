@@ -4,11 +4,12 @@ import {
   getGuestsByEvent,
   checkInGuest,
   softDeleteGuest,
-  restoreGuest
+  restoreGuest,
+  getEventByInviteToken
 } from '../controllers/guestController.js';
 
 const router = express.Router();
-
+router.get('/invite/:inviteToken', getEventByInviteToken);
 router.post('/create', createGuest);
 router.get('/event/:eventId', getGuestsByEvent);
 router.post('/checkin', checkInGuest);

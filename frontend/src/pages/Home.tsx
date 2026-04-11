@@ -123,23 +123,6 @@ export default function Home() {
             )}
           </div>
         </div>
-
-        {/* Floating 3D-like QR Preview */}
-        <div className="absolute right-12 top-40 hidden 2xl:block">
-          <div className="relative w-80 h-80 bg-white p-8 rounded-[2.75rem] shadow-2xl border border-zinc-100">
-            <div className="bg-white rounded-3xl p-6 shadow-inner">
-              <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=https://eventflow.in/guest/demo12345"
-                alt="EventFlow QR"
-                className="w-full h-full drop-shadow-md"
-              />
-            </div>
-            <div className="absolute -top-4 -right-4 bg-gradient-to-br from-emerald-400 to-teal-500 text-white text-xs font-bold px-6 py-2 rounded-2xl shadow-xl flex items-center gap-2">
-              <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-              LIVE DEMO
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Features */}
