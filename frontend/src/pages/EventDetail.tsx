@@ -1,3 +1,4 @@
+
 // src/pages/EventDetail.tsx
 import toast from "react-hot-toast";
 import { useState, useEffect } from 'react';

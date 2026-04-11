@@ -25,7 +25,7 @@ export default function AdminGuests() {
     const fetchGuests = async (p = 1) => {
         setLoading(true);
         try {
-            const res = await ADMIN_API.get(`/guests?page=${p}&eventId=${eventIdFilter}`);
+            const res = await ADMIN_API.get(`/guest?page=${p}&eventId=${eventIdFilter}`);
             setGuests(res.data.guests || []);
             setTotalPages(res.data.totalPages || 1);
             setTotalGuests(res.data.totalGuests || 0);
@@ -44,9 +44,9 @@ export default function AdminGuests() {
         setActionId(guest._id);
         try {
             if (guest.isDeleted) {
-                await ADMIN_API.patch(`/guests/unblock/${guest._id}`);
+                await ADMIN_API.patch(`/guest/unblock/${guest._id}`);
             } else {
-                await ADMIN_API.patch(`/guests/block/${guest._id}`);
+                await ADMIN_API.patch(`/guest/block/${guest._id}`);
             }
             fetchGuests(page);
         } catch (e) {

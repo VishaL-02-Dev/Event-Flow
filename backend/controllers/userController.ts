@@ -46,8 +46,8 @@ if(!jwtSecret)
 }
         const { email, password } = req.body;
         const findUser = await User.findOne({ email });
-        if (!findUser) {
-            return res.status(400).json({ message: "User doesnt exist" })
+        if (!findUser || findUser.isDeleted === true) {
+            return res.status(400).json({ message: "User doesn't exist" })
         }
 
         const passCompare = await findUser.comparePassword(password);
