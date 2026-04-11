@@ -41,7 +41,7 @@ export const createGuest = async (req: Request, res: Response) => {
 
 export const getGuestsByEvent = async (req: Request, res: Response) => {
   try {
-    const { eventId } = req.params;
+    const eventId  = req.query.eventId as string; 
 
     const guests = await Guest.find({ eventId:eventId });
 
@@ -57,6 +57,7 @@ export const checkInGuest = async (req: Request, res: Response) => {
     const { token } = req.body;
 
     const guest = await Guest.findOne({ entryToken: token });
+    
 
     if (!guest) {
       return res.status(404).json({ message: "Invalid token" });
@@ -125,7 +126,7 @@ export const getEventByInviteToken = async (req: Request, res: Response) => {
 
     const event = await Event.findOne({ 
       inviteToken,
-      isDeleted: { $ne: true }   // Don't show deleted events
+      isDeleted: { $ne: true }   
     }).select('name description location date _id');
 
     if (!event) {
