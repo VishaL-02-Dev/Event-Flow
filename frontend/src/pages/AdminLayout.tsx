@@ -68,7 +68,7 @@ export default function AdminLayout() {
 
         {/* Navigation */}
         <nav className="flex-1 px-4 py-8 space-y-1.5">
-          {navItems.map((item, index) => (
+          {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
