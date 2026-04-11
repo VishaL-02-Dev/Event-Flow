@@ -38,7 +38,7 @@ export default function EventDetail() {
 
   const [event, setEvent] = useState<Event | null>(null);
   const [guests, setGuests] = useState<Guest[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'guests'>('overview');
   const [showQR, setShowQR] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
