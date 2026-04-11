@@ -1,4 +1,5 @@
 // src/pages/Dashboard.tsx
+import toast from "react-hot-toast";
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../services/api';
@@ -36,7 +37,7 @@ export default function Dashboard() {
   const copyInviteLink = (inviteToken: string) => {
     const inviteLink = `${window.location.origin}/invite/${inviteToken}`;
     navigator.clipboard.writeText(inviteLink);
-    alert("✅ Invite link copied to clipboard!");
+    toast.success("✅ Invite link copied to clipboard!");
   };
 
   return (

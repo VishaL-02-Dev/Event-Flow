@@ -1,4 +1,5 @@
 // src/pages/EventDetail.tsx
+import toast from "react-hot-toast";
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import API from '../services/api';
@@ -49,7 +50,7 @@ export default function EventDetail() {
       setEvent(res.data);
     } catch (err) {
       console.error(err);
-      alert("Event not found or you don't have access.");
+      toast.error("Event not found or you don't have access.");
       navigate('/dashboard');
     }
   };
@@ -80,17 +81,17 @@ export default function EventDetail() {
   const handleCheckIn = async (entryToken: string) => {
     try {
       await API.post('/guest/checkin', { token: entryToken });
-      alert("Guest checked in successfully! ✓");
+      toast.success("Guest checked in successfully! ✓");
       fetchGuests();
     } catch (err: any) {
-      alert(err.response?.data?.message || "Check-in failed");
+    toast.error(err.response?.data?.message || "Check-in failed");
     }
   };
 
   const copyInviteLink = () => {
     if (!inviteLink) return;
     navigator.clipboard.writeText(inviteLink);
-    alert("✅ Invite link copied to clipboard!");
+    toast.success("Invite link copied to clipboard!");
   };
 
   if (loading && !event) {

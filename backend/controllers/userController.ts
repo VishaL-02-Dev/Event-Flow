@@ -22,7 +22,7 @@ export const registerUser = async (req: Request, res: Response) => {
             password: password
         });
 
-        return res.status(200).json({ message: "User Registered Successfully" })
+        return res.status(201).json({ message: "User Registered Successfully" ,newUser})
     } catch (error) {
         console.error(error);
 

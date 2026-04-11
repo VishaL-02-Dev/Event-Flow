@@ -1,4 +1,5 @@
 // src/components/CreateEventModal.tsx
+import toast from "react-hot-toast";
 import { useState } from 'react';
 import API from '../services/api';   
 
@@ -32,9 +33,11 @@ export default function CreateEventModal({
     try {
       await API.post('/events', formData);     
 
-      alert('Event created successfully! 🎉');
+      toast.success("Event created successfully! 🎉");
+       setTimeout(() => {
       onEventCreated();
       onClose();
+    }, 800);
 
       // Reset form
       setFormData({ name: '', description: '', location: '', date: '' });
