@@ -41,8 +41,8 @@ export const createGuest = async (req: Request, res: Response) => {
 
 export const getGuestsByEvent = async (req: Request, res: Response) => {
   try {
-    const eventId = req.query.eventId as string;
-
+    const eventId = req.params;
+    console.log("Event id: ", eventId);
     const guests = await Guest.find({ eventId: eventId });
 
     res.status(200).json(guests);

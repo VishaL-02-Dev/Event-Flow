@@ -1,5 +1,3 @@
-
-// src/pages/EventDetail.tsx
 import toast from "react-hot-toast";
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
