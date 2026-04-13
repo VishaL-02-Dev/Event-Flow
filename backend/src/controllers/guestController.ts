@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import mongoose from 'mongoose';
 import Guest from "../models/Guest.js";
 import Event from "../models/Event.js";
 import crypto from "crypto";
@@ -41,9 +42,9 @@ export const createGuest = async (req: Request, res: Response) => {
 
 export const getGuestsByEvent = async (req: Request, res: Response) => {
   try {
-    const eventId = req.params;
-    console.log("Event id: ", eventId);
-    const guests = await Guest.find({ eventId: eventId });
+    const {eventId} = req.params;
+    // console.log("Event id: ", eventId);
+    const guests = await Guest.find({ eventId });
 
     res.status(200).json(guests);
 
